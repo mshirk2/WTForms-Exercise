@@ -11,10 +11,9 @@
     {{ form.hidden_tag() }}
 
     {% for field in form if field.widget.input_type != 'hidden' %}
-
         <p>
-            {{ field.label }}
-            {{ field }}
+            {{ field.label(class_='col-form-label') }}
+            {{ field (class_='form-control')}}
 
             {% for error in field.errors %}
                 {{ error }}
@@ -23,8 +22,10 @@
 
     {% endfor %}
 
-    <button type="submit btn btn-primary">Submit</button>
-    <a class="btn btn-primary" href="/">Back to Home</a>
+    <br>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-primary" href="/">Cancel</a>
 
 </form>
 
