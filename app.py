@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, flash
 from models import db, connect_db, Pet
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///adopt'
@@ -51,10 +51,20 @@ def add_form():
         return render_template("add.html", form=form)
 
 
-@app.route("/<int:pet_id>")
+@app.route("/<int:pet_id>", methods=['GET', 'POST'])
 def pet_detail(pet_id):
     """Pet Detail Page"""
 
     pet = Pet.query.get_or_404(pet_id)
+    form = EditPetForm(obj=pet)
 
-    return render_template("detail.html", pet=pet)
+    if form.validate_on_submit():
+        pet.photo_url = form.photo_url.data
+        pet.age = form.age.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+        db.session.commit()
+        flash(f"{pet.name} updated.")
+        return redirect("/")
+    else:
+        return render_template("edit_pet.html", pet=pet, form=form)

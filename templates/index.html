@@ -14,15 +14,16 @@
     
         <div class="col-4">
 
-            <a href="/{{pet.id}}"><img src={{pet.photo_url}} class="img-thumbnail" alt={{pet.name}}></a>
+            <a href="/{{pet.id}}"><img src={{pet.image_url()}} class="img-thumbnail" alt={{pet.name}}></a>
 
-            <h2><a href="/{{pet.id}}">{{ pet.name }}</a></h2>
+            <p class="d-flex justify-content-between mb-5"><a href="/{{pet.id}}" class="h4">{{ pet.name }}</a>
 
             {% if pet.available %}
-                <p class="text-success font-weight-bold">Available</p>
+                <span class="text-success"><strong>Available</strong></span>
             {% else %}
-                <p class="text-danger font-weight-bold">Not Available</p>
+                <span class="text-danger"><strong>Not Available</strong></span>
             {% endif %}
+            </p>
             
         </div>
     {% endfor %}

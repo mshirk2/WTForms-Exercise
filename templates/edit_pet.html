@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}Add a Pet{% endblock %}
+{% block title %}{{pet.name}}{% endblock %}
 
 {% block content %}
 
-<h1 class="display-1">Add a Pet</h1>
+<h1 class="display-1">{{pet.name}}</h1>
+
 <br>
 
-<form id="add-pet-form" method="POST">
+<div class="col-4">
+    <img src={{pet.image_url()}}  class="img-thumbnail" alt={{pet.name}}>
+</div>
+
+<br>
+
+<form id="edit-pet-form" method="POST">
     {{ form.hidden_tag() }}
 
     {% for field in form if field.widget.input_type != 'hidden' %}
@@ -21,21 +28,18 @@
                 {{ field (class_='form-control')}}
             {% endif %}
 
-            
             {% for error in field.errors %}
                 <b class='text-danger'>{{ error }}</b>
             {% endfor %}
       
 
     {% endfor %}
-
     <br>
     <br>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Update</button>
     <a class="btn btn-secondary" href="/">Cancel</a>
 
 </form>
-
 
 {% endblock %}
